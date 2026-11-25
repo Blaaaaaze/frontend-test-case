@@ -17,7 +17,7 @@ export default function ProductList() {
     useEffect(() => {
         dispatch(setLoading(true));
 
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             const mockProducts = [
                 {
                     id: 1,
@@ -71,6 +71,10 @@ export default function ProductList() {
             dispatch(setProducts(mockProducts));
             dispatch(setLoading(false));
         }, 1000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, [dispatch]);
 
     const filteredProducts = products

@@ -9,7 +9,7 @@ export default function Header() {
     const user = useSelector(selectUser);
 
     useEffect(() => {
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             dispatch(
                 setUser({
                     id: 1,
@@ -18,6 +18,10 @@ export default function Header() {
                 }),
             );
         }, 500);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
     }, [dispatch]);
 
     return (

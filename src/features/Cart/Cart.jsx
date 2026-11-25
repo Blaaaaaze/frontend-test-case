@@ -17,15 +17,12 @@ export default function Cart() {
     };
 
     const handleUpdateQuantity = (id, quantity) => {
-        if (quantity <= 0) {
-            handleRemoveItem(id);
-            return;
-        }
         dispatch({ type: 'cart/updateQuantity', payload: { id, quantity } });
     };
 
     const handleCheckout = () => {
         setShowCheckout(true);
+
         setTimeout(() => {
             alert('Заказ оформлен!');
             dispatch({ type: 'cart/clearCart' });

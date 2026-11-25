@@ -2,9 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     cart: [],
-    cartCount: 0,
-    totalPrice: 0,
-    cartItemsCount: 0,
 };
 
 const cartSlice = createSlice({
@@ -20,39 +17,28 @@ const cartSlice = createSlice({
             } else {
                 state.cart.push({ ...product, quantity: 1 });
             }
-      
-            state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0);
-            state.cartItemsCount = state.cart.length;
-            state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         },
 
         removeFromCart: (state, action) => {
             state.cart = state.cart.filter(item => item.id !== action.payload);
-      
-            state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0);
-            state.cartItemsCount = state.cart.length;
-            state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         },
 
         updateQuantity: (state, action) => {
             const { id, quantity } = action.payload;
+
+            if (quantity <= 0) {
+                state.cart = state.cart.filter(item => item.id !== id);
+                return;
+            }
+
             const item = state.cart.find(item => item.id === id);
       
             if (item) {
                 item.quantity = quantity;
             }
-      
-            state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0);
-            state.cartItemsCount = state.cart.length;
-            state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0);
         },
 
-        clearCart: (state) => {
-            state.cart = [];
-            state.cartCount = 0;
-            state.cartItemsCount = 0;
-            state.totalPrice = 0;
-        }
+        clearCart: () => initialState,
     }
 });
 
