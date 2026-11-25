@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Cart.css';
 import { selectCart, selectCartCount, selectTotalPrice } from './cart-selectors';
+import { clearCart, removeFromCart, updateQuantity } from './cart-slice';
 
 export default function Cart() {
     const dispatch = useDispatch();
@@ -13,11 +14,11 @@ export default function Cart() {
     const [showCheckout, setShowCheckout] = useState(false);
 
     const handleRemoveItem = (id) => {
-        dispatch({ type: 'cart/removeFromCart', payload: id });
+        dispatch(removeFromCart(id));
     };
 
     const handleUpdateQuantity = (id, quantity) => {
-        dispatch({ type: 'cart/updateQuantity', payload: { id, quantity } });
+        dispatch(updateQuantity({ id, quantity }));
     };
 
     const handleCheckout = () => {
@@ -25,7 +26,7 @@ export default function Cart() {
 
         setTimeout(() => {
             alert('Заказ оформлен!');
-            dispatch({ type: 'cart/clearCart' });
+            dispatch(clearCart());
             setShowCheckout(false);
             setIsOpen(false);
         }, 1000);

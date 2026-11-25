@@ -3,6 +3,7 @@ import { setLoading, setProducts } from './products-slice';
 import { useEffect, useState } from 'react';
 import './ProductsList.css';
 import { selectLoading, selectProducts } from './products-selectors';
+import { addToCart } from '../Cart/cart-slice';
 
 export default function ProductList() {
     const dispatch = useDispatch();
@@ -152,10 +153,7 @@ export default function ProductList() {
                         <p>{product.description}</p>
                         <div className="price">${product.price}</div>
                         <button
-                            onClick={() => {
-                                const action = { type: 'cart/addToCart', payload: product };
-                                dispatch(action);
-                            }}
+                            onClick={() => dispatch(addToCart(product))}
                         >
                             Добавить в корзину
                         </button>
