@@ -5,8 +5,6 @@ const initialState = {
   cartCount: 0,
   totalPrice: 0,
   cartItemsCount: 0,
-  cartTotalAmount: 0,
-  cartTotalSum: 0
 }
 
 const cartSlice = createSlice({
@@ -26,8 +24,6 @@ const cartSlice = createSlice({
       state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0)
       state.cartItemsCount = state.cart.length
       state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalAmount = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalSum = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
     },
 
     removeFromCart: (state, action) => {
@@ -36,8 +32,6 @@ const cartSlice = createSlice({
       state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0)
       state.cartItemsCount = state.cart.length
       state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalAmount = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalSum = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
     },
 
     updateQuantity: (state, action) => {
@@ -51,8 +45,6 @@ const cartSlice = createSlice({
       state.cartCount = state.cart.reduce((total, item) => total + item.quantity, 0)
       state.cartItemsCount = state.cart.length
       state.totalPrice = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalAmount = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
-      state.cartTotalSum = state.cart.reduce((total, item) => total + (item.price * item.quantity), 0)
     },
 
     clearCart: (state) => {
@@ -60,8 +52,6 @@ const cartSlice = createSlice({
       state.cartCount = 0
       state.cartItemsCount = 0
       state.totalPrice = 0
-      state.cartTotalAmount = 0
-      state.cartTotalSum = 0
     }
   }
 })
