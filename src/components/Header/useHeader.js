@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../features/User/user-slice';
 import { selectUser } from '../../features/User/user-selectors';
+import { mockUser } from '../../mock/User';
 
 export default function useHeader() {
     const dispatch = useDispatch();
@@ -10,11 +11,7 @@ export default function useHeader() {
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             dispatch(
-                setUser({
-                    id: 1,
-                    name: 'Иван Иванов',
-                    email: 'ivan@example.com',
-                }),
+                setUser(mockUser),
             );
         }, 500);
 
