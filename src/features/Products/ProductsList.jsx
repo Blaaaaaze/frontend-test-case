@@ -117,17 +117,22 @@ export default function ProductList() {
                 </div>
 
                 <div className="filter-controls">
-                    <select value={selectedCategory} onChange={handleCategoryChange}>
-                        <option value="all">Все категории</option>
-                        <option value="phones">Телефоны</option>
-                        <option value="laptops">Ноутбуки</option>
-                        <option value="tablets">Планшеты</option>
-                    </select>
+                    {showFilters ? (
+                        <>
+                            <select value={selectedCategory} onChange={handleCategoryChange}>
+                                <option value="all">Все категории</option>
+                                <option value="phones">Телефоны</option>
+                                <option value="laptops">Ноутбуки</option>
+                                <option value="tablets">Планшеты</option>
+                            </select>
 
-                    <select value={sortBy} onChange={handleSortChange}>
-                        <option value="name">По названию</option>
-                        <option value="price">По цене</option>
-                    </select>
+                            <select value={sortBy} onChange={handleSortChange}>
+                                <option value="name">По названию</option>
+                                <option value="price">По цене</option>
+                            </select>
+                        </>
+
+                    ) : null}
 
                     <button onClick={() => setShowFilters(!showFilters)}>
                         {showFilters ? 'Скрыть фильтры' : 'Показать фильтры'}
