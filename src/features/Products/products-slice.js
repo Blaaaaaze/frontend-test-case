@@ -1,24 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  products: [],
-  loading: false,
-}
+    products: [],
+    loading: false,
+};
 
 const productsSlice = createSlice({
-  name: 'products',
-  initialState,
-  reducers: {
-    setProducts: (state, action) => {
-      state.products = action.payload
-    },
+    name: 'products',
+    initialState,
+    reducers: {
+        setProducts: (state, action) => {
+            state.products = action.payload;
+        },
 
-    setLoading: (state, action) => {
-      state.loading = action.payload
-    },
-  }
-})
+        setLoading: (state, action) => {
+            state.loading = action.payload;
+        },
+    }
+});
 
-export const { setProducts, setLoading } = productsSlice.actions
+export const { setProducts, setLoading } = productsSlice.actions;
 
-export default productsSlice.reducer
+export default productsSlice.reducer;
