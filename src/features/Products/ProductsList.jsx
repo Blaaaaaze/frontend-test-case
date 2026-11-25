@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import './ProductsList.css';
 import { selectLoading, selectProducts } from './products-selectors';
 import { addToCart } from '../Cart/cart-slice';
+import { selectShowCheckout } from '../Cart/cart-selectors';
 
 export default function ProductList() {
     const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export default function ProductList() {
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [sortBy, setSortBy] = useState('name');
     const [showFilters, setShowFilters] = useState(false);
+
+    const showCheckout = useSelector(selectShowCheckout);
 
     useEffect(() => {
         dispatch(setLoading(true));
@@ -154,6 +157,7 @@ export default function ProductList() {
                         <div className="price">${product.price}</div>
                         <button
                             onClick={() => dispatch(addToCart(product))}
+                            disabled={showCheckout}
                         >
                             Добавить в корзину
                         </button>

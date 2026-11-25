@@ -164,11 +164,6 @@
   background: #229954;
 }
 
-.checkout-btn:disabled {
-  background: #95a5a6;
-  cursor: not-allowed;
-}
-
 @media (max-width: 768px) {
   .cart-item {
     flex-direction: column;

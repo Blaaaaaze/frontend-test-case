@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Cart.css';
-import { selectCart, selectCartCount, selectTotalPrice } from './cart-selectors';
-import { clearCart, removeFromCart, updateQuantity } from './cart-slice';
+import { selectCart, selectCartCount, selectShowCheckout, selectTotalPrice } from './cart-selectors';
+import { clearCart, removeFromCart, updateChekout, updateQuantity } from './cart-slice';
 
 export default function Cart() {
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
     const cartCount = useSelector(selectCartCount);
     const totalPrice = useSelector(selectTotalPrice);
+    const showCheckout = useSelector(selectShowCheckout);
   
     const [isOpen, setIsOpen] = useState(false);
-    const [showCheckout, setShowCheckout] = useState(false);
 
     const handleRemoveItem = (id) => {
         dispatch(removeFromCart(id));
@@ -22,12 +22,11 @@ export default function Cart() {
     };
 
     const handleCheckout = () => {
-        setShowCheckout(true);
+        dispatch(updateChekout());
 
         setTimeout(() => {
             alert('Заказ оформлен!');
             dispatch(clearCart());
-            setShowCheckout(false);
             setIsOpen(false);
         }, 1000);
     };
@@ -59,11 +58,17 @@ export default function Cart() {
                                         <h4>{item.name}</h4>
                                         <p>${item.price}</p>
                                         <div className="quantity-controls">
-                                            <button onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}>
+                                            <button 
+                                                onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
+                                                disabled={showCheckout}
+                                            >
                                                 -
                                             </button>
                                             <span>{item.quantity}</span>
-                                            <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}>
+                                            <button 
+                                                onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
+                                                disabled={showCheckout}
+                                            >
                                                 +
                                             </button>
                                         </div>
@@ -71,6 +76,7 @@ export default function Cart() {
                                     <button 
                                         className="remove-btn"
                                         onClick={() => handleRemoveItem(item.id)}
+                                        disabled={showCheckout}
                                     >
                                         Удалить
                                     </button>
