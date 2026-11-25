@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Cart.css';
 import { selectCart, selectCartCount, selectShowCheckout, selectTotalPrice } from './cart-selectors';
-import { clearCart, removeFromCart, updateChekout, updateQuantity } from './cart-slice';
+import { clearCart, removeFromCart, setCheckout, updateQuantity } from './cart-slice';
 
 export default function Cart() {
     const dispatch = useDispatch();
@@ -13,6 +13,8 @@ export default function Cart() {
   
     const [isOpen, setIsOpen] = useState(false);
 
+    const timeoutRef = useRef(null);
+
     const handleRemoveItem = (id) => {
         dispatch(removeFromCart(id));
     };
@@ -22,14 +24,27 @@ export default function Cart() {
     };
 
     const handleCheckout = () => {
-        dispatch(updateChekout());
+        if (timeoutRef.current !== null) {
+            return;
+        }
 
-        setTimeout(() => {
+        dispatch(setCheckout(true));
+
+        timeoutRef.current = setTimeout(() => {
+            timeoutRef.current = null;
+
             alert('Заказ оформлен!');
             dispatch(clearCart());
             setIsOpen(false);
         }, 1000);
     };
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(timeoutRef.current);
+            dispatch(setCheckout(false));
+        };
+    }, [dispatch]);
 
     return (
         <div className="cart">
