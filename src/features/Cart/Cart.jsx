@@ -1,56 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import useCart from './useCart';
 import './Cart.css';
-import { selectCart, selectCartCount, selectShowCheckout, selectTotalPrice } from './cart-selectors';
-import { clearCart, removeFromCart, setCheckout, updateQuantity } from './cart-slice';
 
 export default function Cart() {
-    const dispatch = useDispatch();
-    const cart = useSelector(selectCart);
-    const cartCount = useSelector(selectCartCount);
-    const totalPrice = useSelector(selectTotalPrice);
-    const showCheckout = useSelector(selectShowCheckout);
-  
-    const [isOpen, setIsOpen] = useState(false);
-
-    const timeoutRef = useRef(null);
-
-    const handleRemoveItem = (id) => {
-        dispatch(removeFromCart(id));
-    };
-
-    const handleUpdateQuantity = (id, quantity) => {
-        dispatch(updateQuantity({ id, quantity }));
-    };
-
-    const handleCheckout = () => {
-        if (timeoutRef.current !== null) {
-            return;
-        }
-
-        dispatch(setCheckout(true));
-
-        timeoutRef.current = setTimeout(() => {
-            timeoutRef.current = null;
-
-            alert('Заказ оформлен!');
-            dispatch(clearCart());
-            setIsOpen(false);
-        }, 1000);
-    };
-
-    useEffect(() => {
-        return () => {
-            clearTimeout(timeoutRef.current);
-            dispatch(setCheckout(false));
-        };
-    }, [dispatch]);
+    const {
+        cart,
+        cartCount,
+        totalPrice,
+        showCheckout,
+        isOpen,
+        handleRemoveItem,
+        handleUpdateQuantity,
+        handleCheckout,
+        handleToggleCart,
+        handleCloseCart,
+    } = useCart();
 
     return (
         <div className="cart">
             <button 
                 className="cart-toggle"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={handleToggleCart}
             >
                 Корзина ({cartCount})
             </button>
@@ -59,7 +28,7 @@ export default function Cart() {
                 <div className="cart-dropdown">
                     <div className="cart-header">
                         <h3>Корзина</h3>
-                        <button onClick={() => setIsOpen(false)}>×</button>
+                        <button onClick={handleCloseCart}>×</button>
                     </div>
 
                     <div className="cart-items">
